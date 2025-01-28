@@ -1,0 +1,22 @@
+name: learn-web
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - workspace:/workspace
+    ports:
+      - "8000:8000"
+
+  # nginxで/workspaceを配信する
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - workspace:/usr/share/nginx/html
+    ports:
+      - "8080:80"
+
+volumes:
+  workspace:
