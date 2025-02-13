@@ -6,17 +6,22 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - workspace:/workspace
+      - ./workspace:/workspace
     ports:
       - "8000:8000"
+    command:
+      [
+        "serve-web",
+        "--host",
+        "0.0.0.0",
+        "--accept-server-license-terms",
+        "--connection-token",
+        "<secret>",
+      ]
 
-  # nginxで/workspaceを配信する
   nginx:
     image: nginx:alpine
     volumes:
-      - workspace:/usr/share/nginx/html
+      - ./workspace:/usr/share/nginx/html
     ports:
       - "8080:80"
-
-volumes:
-  workspace:
